@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Todo {
+public class TodoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
