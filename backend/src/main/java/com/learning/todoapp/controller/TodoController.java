@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.learning.todoapp.service.TodoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -17,9 +18,9 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("path")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    @GetMapping
+    public ResponseEntity<?> getMethodName() {
+        return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
     
 
