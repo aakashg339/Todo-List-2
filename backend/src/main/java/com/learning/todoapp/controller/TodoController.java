@@ -9,8 +9,6 @@ import com.learning.todoapp.service.TodoService;
 
 import jakarta.validation.Valid;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +38,7 @@ public class TodoController {
     
     @PostMapping("/post")
     public ResponseEntity<TodoItemDTO> createTodo(@Valid @RequestBody TodoItemDTO todoItemDTO) {
-        TodoItemDTO savedTodoItemDTO = todoService.createTodo(TodoItemDTO);
+        TodoItemDTO savedTodoItemDTO = todoService.createTodo(todoItemDTO);
 
         return new ResponseEntity<>(savedTodoItemDTO, HttpStatus.CREATED);
     }
@@ -53,8 +51,8 @@ public class TodoController {
     }
 
     @PutMapping("/todo/{todoId}")
-    public ResponseEntity<TodoItemDTO> updateTodo(@PathVariable Long todoId, @Valid @RequestBody Long todoItemDTO) {
-        TodoItemDTO updatedTodoItemDTO = todoService.updateTodo(todoId);
+    public ResponseEntity<TodoItemDTO> updateTodo(@PathVariable Long todoId, @Valid @RequestBody TodoItemDTO todoItemDTO) {
+        TodoItemDTO updatedTodoItemDTO = todoService.updateTodo(todoId, todoItemDTO);
         
         return new ResponseEntity<>(updatedTodoItemDTO, HttpStatus.OK);
     }

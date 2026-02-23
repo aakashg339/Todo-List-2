@@ -1,11 +1,10 @@
-package com.learning.todoapp.controller;
+package com.learning.todoapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.learning.todoapp.exceptions.ResourceNotFoundException;
 import com.learning.todoapp.payload.APIResponse;
 
 @RestControllerAdvice
