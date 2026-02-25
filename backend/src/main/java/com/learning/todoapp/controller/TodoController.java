@@ -29,14 +29,14 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/posts")
+    @GetMapping("/todos")
     public ResponseEntity<TodoResponse> getAllTodos() {
         TodoResponse todoResponse = todoService.getAllTodos();
         
         return new ResponseEntity<>(todoResponse, HttpStatus.ACCEPTED);
     }
     
-    @PostMapping("/post")
+    @PostMapping("/todo")
     public ResponseEntity<TodoItemDTO> createTodo(@Valid @RequestBody TodoItemDTO todoItemDTO) {
         TodoItemDTO savedTodoItemDTO = todoService.createTodo(todoItemDTO);
 

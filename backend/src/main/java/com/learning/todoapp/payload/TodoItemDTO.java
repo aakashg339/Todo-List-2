@@ -1,7 +1,7 @@
 package com.learning.todoapp.payload;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TodoItemDTO {
 
+    private Long id;
+    
     @NotNull
-    @Min(value = 3)
+    @Size(min = 3, message = "Title must be of atleast 3 characters")
     private String title;
 
     private Boolean completed;
