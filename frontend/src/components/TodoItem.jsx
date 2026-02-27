@@ -1,17 +1,27 @@
 import { MdDone, MdPending } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useState } from "react";
 
-function TodoItem({todo}) {
-    // console.log("TodoItem", todo);
-    // console.log("TodoItem", todo.title);
+function TodoItem({todo, handleUpdate, handleDelete}) {
+    const [error, setError] = useState('');
 
-    const handleUpdate = () => {
-
+    const handleUpdateTodoClick = async () => {
+        try {
+            await handleUpdate(todo.id);
+        } catch (error) {
+            console.error(error.response.data);
+            setError(Object.values(error.response.data));
+        }
     };
 
-    const handleDelete = () => {
-
+    const handleDeleteTodoClick = async () => {
+        try {
+            await handleDelete(todo.id);
+        } catch (error) {
+            console.error(error.response.data);
+            setError(Object.values(error.response.data));
+        }
     };
 
     return (
@@ -19,13 +29,18 @@ function TodoItem({todo}) {
             <p>{todo.title}</p>
             <div className="flex items-center space-x-4 text-xl cursor-pointer">
                 {todo.completed ? <MdDone /> : <MdPending />}
-                <button onClick={handleUpdate}>
+                <button onClick={handleUpdateTodoClick}>
                     <RxUpdate />
                 </button>
-                <button onClick={handleDelete}>
+                <button onClick={handleDeleteTodoClick}>
                     <RiDeleteBinLine />
                 </button>
             </div>
+            {error && (
+                <p className="text-red-500 text-sm text-center font-medium">
+                    Error: {error.join(', ')}
+                </p>
+            )}
         </div>
     );
 }

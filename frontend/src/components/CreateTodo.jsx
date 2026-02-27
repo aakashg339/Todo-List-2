@@ -1,24 +1,16 @@
 import { useState } from "react";
-import api from "../api/api";
 
-function CreateTodo({todos, setTodos}) {
-    const [todoDescription, setTodoDescription] = useState("");
+function CreateTodo({handleCreate}) {
+    const [todoTitle, setTodoTitle] = useState("");
     const [error, setError] = useState([]);
 
-    const handleCreateTodoSubmit = async (e) => {
+    const handleCreateTodoSubmit = async () => {
         try {
-            const response = await api.post('/todo', {
-                title: todoDescription,
-                completed: false
-            });
-            console.log(response.data);
-            setTodos([...todos, response.data]);
+            await handleCreate(todoTitle);
             setError('');
-            setTodoDescription('');
+            setTodoTitle('');
         } catch (error) {
-            // console.log(error);
-            // console.log(error.message);
-            // console.log(error.response.data);
+            console.error(error.response.data);
             setError(Object.values(error.response.data));
         }
     };
@@ -34,9 +26,9 @@ function CreateTodo({todos, setTodos}) {
             <div className="space-y-2">
             <input
                 type="text"
-                value={todoDescription}
+                value={todoTitle}
                 placeholder="Enter description"
-                onChange={(e) => setTodoDescription(e.target.value)}
+                onChange={(e) => setTodoTitle(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl 
                         focus:outline-none focus:ring-2 focus:ring-blue-500 
                         focus:border-transparent transition duration-200"

@@ -19,11 +19,32 @@ function App() {
     fetchTodos();
   }, []);
 
+  const handleCreate = async (title) => {
+    const response = await api.post('/todo', {
+        title,
+        completed: false
+    });
+    setTodos([...todos, response.data]);
+  };
+
+  const handleDelete = async (id) => {
+    const response = await api.delete(`/todo/${id}`);
+    setTodos(todos.filter((todo) => todo.id != id));
+    return response;
+  };
+
+  const handleUpdate = async (id, updateData) => {
+    const response = await api.put(`/todo/${id}`,updateData);
+    const filteredTodos = todos.filter((todo) => todo.id != id);
+    setTodos([...filteredTodos, response.data]);
+    return response;
+  };
+
   return (
     <div className='min-h-screen bg-gray-100 py-10'>
       <div className='max-w-4xl mx-auto space-y-8 px-4'>
-        <CreateTodo todos={todos} setTodos={setTodos} />
-        <Todos todos={todos} setTodos={setTodos} />
+        <CreateTodo handleCreate={handleCreate} />
+        <Todos todos={todos} handleUpdate={handleUpdate} handleDelete={handleDelete} />
       </div>
     </div>
   )
