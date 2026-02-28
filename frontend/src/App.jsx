@@ -24,19 +24,18 @@ function App() {
         title,
         completed: false
     });
-    setTodos([...todos, response.data]);
+    setTodos(prev => [...prev, response.data]);
   };
 
   const handleDelete = async (id) => {
     const response = await api.delete(`/todo/${id}`);
-    setTodos(todos.filter((todo) => todo.id != id));
+    setTodos(prev => prev.filter((todo) => todo.id != id));
     return response;
   };
 
   const handleUpdate = async (id, updateData) => {
     const response = await api.put(`/todo/${id}`,updateData);
-    const filteredTodos = todos.filter((todo) => todo.id != id);
-    setTodos([...filteredTodos, response.data]);
+    setTodos(prev => prev.map((todo) => todo.id == id ? response.data : todo));
     return response;
   };
 
