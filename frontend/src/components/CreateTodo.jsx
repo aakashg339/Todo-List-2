@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function CreateTodo({handleCreate}) {
     const [todoTitle, setTodoTitle] = useState("");
-    const [error, setError] = useState([]);
+    const [error, setError] = useState('');
 
     const handleCreateTodoSubmit = async () => {
         try {
@@ -10,8 +10,7 @@ function CreateTodo({handleCreate}) {
             setError('');
             setTodoTitle('');
         } catch (error) {
-            console.error(error.response.data);
-            setError(Object.values(error.response.data));
+            setError(error.message);
         }
     };
     
@@ -46,9 +45,9 @@ function CreateTodo({handleCreate}) {
             Create Todo
             </button>
 
-            {error.length != 0 && (
+            {error && (
             <p className="text-red-500 text-sm text-center font-medium">
-                Error: {error.join(', ')}
+                Error: {error}
             </p>
             )}
 

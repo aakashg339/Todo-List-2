@@ -4,14 +4,10 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 
 function TodoItem({todo, handleUpdate, handleDelete}) {
-    const [error, setError] = useState([]);
+    const [error, setError] = useState('');
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [updatedTodoTitle, setUpdatedTodoTitle] = useState(todo.title);
     const [updatedCompletionStatus, setUpdatedCompletionStatus] = useState(todo.completed);
-
-    // useEffect(() => {
-
-    // }, []);
 
     const handleUpdateTodoButtonClick = async () => {
         try {
@@ -21,25 +17,23 @@ function TodoItem({todo, handleUpdate, handleDelete}) {
                 completed: updatedCompletionStatus
             };
             await handleUpdate(todo.id, updatedTodoData);
-            setError([]);
+            setError('');
         } catch (error) {
-            console.error(error.response.data);
-            setError(Object.values(error.response.data));
+            setError(error.message);
         }
     };
 
     const handleUpdateTodoIconClick = () => {
         setShowUpdateSection(!showUpdateSection);
-        setError([]);
+        setError('');
     };
 
     const handleDeleteTodoIconClick = async () => {
         try {
             await handleDelete(todo.id);
-            setError([]);
+            setError('');
         } catch (error) {
-            console.error(error.response.data);
-            setError(Object.values(error.response.data));
+            setError(error.message);
         }
     };
 
@@ -92,9 +86,9 @@ function TodoItem({todo, handleUpdate, handleDelete}) {
                 )
             }
             
-            {error.length > 0 && (
+            {error && (
                 <p className="text-red-500 text-sm text-center font-medium">
-                    Error: {error.join(', ')}
+                    Error: {error}
                 </p>
             )}
         </div>

@@ -1,42 +1,36 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import CreateTodo from './components/CreateTodo'
-import api from './api/api';
 import Todos from './components/Todos';
+import todoService from './service/todoService';
 
 function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     const fetchTodos = async () => {
-      const response = await api.get('/todos');
-      // console.log("Fetch todo response : ", response);
-      // console.log("Todos from response : ", response.data.todos);
-      setTodos([...response.data.todos]);
-      // console.log("todos : ", todos);
+      const response = await todoService.getAllTodos();
+      setTodos([...response]);
     };
 
     fetchTodos();
   }, []);
 
   const handleCreate = async (title) => {
-    const response = await api.post('/todo', {
-        title,
-        completed: false
-    });
-    setTodos(prev => [...prev, response.data]);
+    const newTodo = await todoService.createTodo(title);
+    setTodos(prev => [...prev, newTodo]);
   };
 
   const handleDelete = async (id) => {
-    const response = await api.delete(`/todo/${id}`);
+    const deletedTodo = await todoService.deleteTodo(id);
     setTodos(prev => prev.filter((todo) => todo.id != id));
-    return response;
+    return deletedTodo;
   };
 
   const handleUpdate = async (id, updateData) => {
-    const response = await api.put(`/todo/${id}`,updateData);
-    setTodos(prev => prev.map((todo) => todo.id == id ? response.data : todo));
-    return response;
+    const updatedTodo = await todoService.updateTodo(id, updateData);
+    setTodos(prev => prev.map((todo) => todo.id == id ? updatedTodo : todo));
+    return updatedTodo;
   };
 
   return (
