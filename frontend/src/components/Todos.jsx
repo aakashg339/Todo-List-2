@@ -1,5 +1,3 @@
-import { useState } from "react";
-import api from "../api/api";
 import TodoItem from "./TodoItem";
 
 function Todos({todos, handleUpdate, handleDelete}) {

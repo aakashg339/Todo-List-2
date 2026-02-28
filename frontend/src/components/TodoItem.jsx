@@ -1,7 +1,7 @@
 import { MdDone, MdPending } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function TodoItem({todo, handleUpdate, handleDelete}) {
     const [error, setError] = useState('');
